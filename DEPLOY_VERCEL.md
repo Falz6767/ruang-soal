@@ -14,10 +14,10 @@ Siapkan dua variabel untuk environment **Production**:
 
 | Nama | Nilai |
 | --- | --- |
-| `DATABASE_URL` | URL PostgreSQL pooled untuk menjalankan aplikasi. |
-| `DIRECT_URL` | URL PostgreSQL langsung/non-pooled untuk migrasi. |
+| `DATABASE_URL` | URL PostgreSQL untuk aplikasi; integrasi Prisma menyediakan URL ini otomatis. |
+| `POSTGRES_URL` | URL PostgreSQL langsung/non-pooled untuk migrasi. |
 
-Ambil URL dari dashboard penyedia. Nama variabel yang dibuat integrasi dapat berbeda. Jika tersedia `POSTGRES_URL` dan `POSTGRES_URL_NON_POOLING`, salin nilai yang sesuai ke dua nama di atas. Jangan memakai contoh localhost dari `.env.example` pada Vercel.
+Integrasi Prisma Postgres otomatis membuat `DATABASE_URL` dan `POSTGRES_URL` ketika dihubungkan ke project. Keduanya berisi koneksi langsung sehingga deployment dapat berjalan tanpa menyalin rahasia. Aplikasi membatasi satu koneksi per instance. Untuk trafik lebih besar, tambahkan URL pooled untuk aplikasi sesuai petunjuk penyedia; pertahankan koneksi langsung untuk migrasi. Untuk penyedia lain, isi kedua variabel secara manual. Jangan memakai contoh localhost dari `.env.example` pada Vercel.
 
 Gunakan SSL sesuai petunjuk penyedia, biasanya `sslmode=require`. Untuk serverless gunakan pooled endpoint, dan `connection_limit=1` bila disarankan penyedia. Kedua URL boleh sama jika database tidak mempunyai pooler dan koneksi langsung memang didukung; perhatikan batas koneksinya.
 
@@ -64,13 +64,13 @@ Tes API otomatis dijalankan GitHub Actions pada database PostgreSQL sementara. U
 
 ## Preview deployment
 
-Gunakan database atau branch database **terpisah** untuk Preview. Skrip build menerapkan migrasi, sehingga kredensial produksi pada Preview dapat mengubah skema produksi. Isi pasangan `DATABASE_URL` dan `DIRECT_URL` khusus Preview, atau jangan aktifkan preview sampai database pengembangan tersedia.
+Gunakan database atau branch database **terpisah** untuk Preview. Skrip build menerapkan migrasi, sehingga kredensial produksi pada Preview dapat mengubah skema produksi. Isi pasangan `DATABASE_URL` dan `POSTGRES_URL` khusus Preview, atau jangan aktifkan preview sampai database pengembangan tersedia.
 
 ## Jika build gagal
 
-- **Environment variable not found:** isi `DATABASE_URL` dan `DIRECT_URL` untuk environment yang dibangun, lalu redeploy.
+- **Environment variable not found:** isi `DATABASE_URL` dan `POSTGRES_URL` untuk environment yang dibangun, lalu redeploy.
 - **P1001/cannot reach database:** periksa host, port, SSL, dan izin jaringan dari Vercel.
-- **Migrasi gagal melalui pooler:** arahkan `DIRECT_URL` ke endpoint direct/non-pooled.
+- **Migrasi gagal melalui pooler:** arahkan `POSTGRES_URL` ke endpoint direct/non-pooled.
 - **Tabel belum tersedia:** pastikan Build Command `npm run vercel-build`; periksa langkah migrasi pada log.
 - **Prisma tidak ditemukan:** jangan memakai `npm ci --omit=dev` saat build; Prisma CLI dan compiler diperlukan.
 - **Bank kosong:** seed bersifat opsional. Buat soal atau jalankan seed satu kali.

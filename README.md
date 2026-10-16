@@ -23,8 +23,8 @@ Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Prisma ORM 6, Postg
 Panduan lengkap: [DEPLOY_VERCEL.md](DEPLOY_VERCEL.md).
 
 1. Import repository **Falz6767/ruang-soal** melalui [Vercel New Project](https://vercel.com/new).
-2. Siapkan PostgreSQL melalui penyedia yang tersedia di Vercel Marketplace, misalnya Neon.
-3. Isi **DATABASE_URL** (koneksi pooled) dan **DIRECT_URL** (koneksi langsung untuk migrasi) pada Environment Variables.
+2. Siapkan PostgreSQL melalui penyedia yang tersedia di Vercel Marketplace, misalnya Prisma Postgres.
+3. Hubungkan integrasinya ke environment Production. Prisma Postgres otomatis membuat **DATABASE_URL** dan **POSTGRES_URL** yang dipakai aplikasi. Untuk penyedia lain, isi kedua variabel secara manual.
 4. Gunakan Root Directory bawaan, Framework Next.js, dan Build Command `npm run vercel-build`.
 5. Deploy. Skrip membuat Prisma Client, menerapkan migrasi PostgreSQL, lalu membangun Next.js.
 

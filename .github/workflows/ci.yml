@@ -27,7 +27,7 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ruang_soal_test?connection_limit=1
-      DIRECT_URL: postgresql://postgres:postgres@localhost:5432/ruang_soal_test
+      POSTGRES_URL: postgresql://postgres:postgres@localhost:5432/ruang_soal_test
       NEXT_TELEMETRY_DISABLED: 1
     steps:
       - uses: actions/checkout@v4
