@@ -34,16 +34,16 @@ Build Command:   npm run vercel-build
 
 Skrip build menjalankan `prisma generate`, `prisma migrate deploy`, lalu `next build --webpack`. Pilih Node.js 22 atau 24 yang tersedia. Tekan Deploy setelah kedua variabel terisi.
 
-Migrasi membuat tabel `Question`, `Worksheet`, dan `WorksheetItem`. Data tetap berada pada PostgreSQL saat deployment berikutnya dibuat. Deployment awal memiliki bank kosong; guru dapat langsung menambah soal melalui antarmuka.
+Migrasi membuat tabel `Question`, `Worksheet`, dan `WorksheetItem`, lalu menambahkan 12 soal contoh berlabel satu kali tanpa menimpa data yang ada. Data tetap berada pada PostgreSQL saat deployment berikutnya dibuat. Contoh yang dihapus tidak muncul kembali pada deploy berikutnya karena migrasi data hanya dijalankan sekali.
 
-Untuk menambahkan 12 soal contoh satu kali, isi `.env` lokal dengan database tujuan yang benar lalu jalankan:
+Untuk memulihkan contoh yang sebelumnya dihapus, isi `.env` lokal dengan database tujuan yang benar lalu jalankan:
 
 ```powershell
 npm ci
 npm run db:seed
 ```
 
-Seed tidak otomatis berjalan setiap deploy agar contoh yang dihapus tidak muncul lagi tanpa diminta.
+Perintah seed manual tidak otomatis berjalan setiap deploy. Contoh baru pada database kosong ditangani migrasi data satu kali.
 
 ## 4. Akses aplikasi pribadi
 
@@ -73,7 +73,7 @@ Gunakan database atau branch database **terpisah** untuk Preview. Skrip build me
 - **Migrasi gagal melalui pooler:** arahkan `POSTGRES_URL` ke endpoint direct/non-pooled.
 - **Tabel belum tersedia:** pastikan Build Command `npm run vercel-build`; periksa langkah migrasi pada log.
 - **Prisma tidak ditemukan:** jangan memakai `npm ci --omit=dev` saat build; Prisma CLI dan compiler diperlukan.
-- **Bank kosong:** seed bersifat opsional. Buat soal atau jalankan seed satu kali.
+- **Bank kosong setelah contoh dihapus:** buat soal sendiri atau jalankan seed manual untuk memulihkan contoh.
 - **Data berbeda antar domain:** periksa database environment Production dan Preview.
 
 ## Referensi

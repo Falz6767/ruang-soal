@@ -12,7 +12,7 @@ Aplikasi bank soal berbahasa Indonesia untuk guru Sekolah Dasar. Versi ini mengg
 - Salinan isi soal pada lembar tetap utuh saat bank diedit atau dihapus.
 - Pratinjau dan cetak A4; kunci jawaban dicetak terpisah.
 - Validasi server, pesan sukses/gagal, konfirmasi hapus, dan tampilan responsif.
-- Seed opsional 12 soal contoh pada enam kelas dan empat mata pelajaran.
+- Dua belas soal contoh pada enam kelas dan empat mata pelajaran, ditambahkan satu kali saat migrasi awal.
 
 ## Teknologi
 
@@ -49,7 +49,7 @@ npm run db:seed
 npm run dev
 ```
 
-Buka http://127.0.0.1:3000. Pada macOS/Linux gunakan `cp .env.example .env`. Seed hanya menambah contoh yang belum tersedia, tidak menggandakan atau menimpa contoh yang masih ada. Seed ulang akan mengembalikan contoh yang telah dihapus; seed tidak dijalankan otomatis saat deploy.
+Buka http://127.0.0.1:3000. Pada macOS/Linux gunakan `cp .env.example .env`. Migrasi data menambahkan contoh satu kali tanpa menimpa data yang ada. Deploy berikutnya tidak mengembalikan contoh yang sudah dihapus. Perintah seed manual dapat dipakai untuk memulihkan contoh; perintah ini hanya menambah ID contoh yang belum tersedia.
 
 Untuk mengembangkan skema, gunakan `npm run db:migrate -- --name nama_perubahan` pada database pengembangan.
 
